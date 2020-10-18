@@ -1,0 +1,34 @@
+%! Author = Matthias
+%! Date = 01.10.2020
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{amsmath}
+
+% Document
+\begin{document}
+    \section{Autonome Systeme - Bewegung - V 2}\label{sec:vtwo}
+    Freie Vektoren -> wenn Position keine Rolle spielt (e.g. Geschwindigkeit) -> Vektor mit 0 statt 1 ergaenzen -> mit Transformationsmatrix multiplizieren -> Rotation ohne Verschiebevektor\newline
+    1. Kraefte, Geschwindigkeiten, Momente (freie Vektoren) -> vom Bezugssystem in anderes transformieren -> was beachten?
+    Verschiebevektor wird nicht benoetig (freie Vektoren haengen nicht von Position ab) -> nur Rotationsmatrix noetig, dritte Zeile mit 0 erweitern
+    2. Wie funktioniert die Transformation von Vektoren im 3D-Raum?
+    3. Wie sieht die Transformationsmatrix in 3D aus?
+    4. Wie wird die Pose eines Roboters in 2D als Vektor beschrieben?
+    - Referenzsystem -> Koordinatensystem U; Roboter bekommt eigenes, lokales Koordinatensystem R;
+    - Position des Roboters = Position des Ursprungs von R in U (Koordinaten x y);
+    - Orientierung des Roboters = Verdrehung zwischen R und U (Winkel zwischen  x-Achse von R und der x-Achse von U) = Winkel zeta
+    - Pose des Roboters = Kombination von Position und Orientierung
+    5. Wie sieht der Geschwindigkeitsvektor eines Roboters in 2D aus?
+    6. Wie wird die Geschwindigkeit eines Roboters in 2D transformiert?
+    7. Was versteht man unter der Vorwaertskinematik?
+    8. Leiten sie die Vorwaertskinematik eines Roboters mit Differentialantrieb aus den geometrischen Verhaeltnissen her
+    9. Welche Annahmen werden bei der Ableitung der kinematischen Zwangsbedingungen fuer Raeder getroffen?
+    10. Welche beiden Bewegungsrichtungen werden fuer jedes Rad bei der Ableitung der Zwangsbedingungen betrachtet?
+    11. Leiten sie die Zwangsbedingungen fuer das Standardrad her.
+    12. Wodurch unterscheiden sich die Zwangsbedingungen des gelenkten vom ungelenkten Standardrad?
+    13. Erklaeren sie die Ableitung der Zwangsbedingung fuer das Mecanum-Wheel.
+    14. Wodurch unterscheiden sich die Zwangsbedingungen des Kugelrades vom ungelenkten Standardrad?
+
+\end{document}

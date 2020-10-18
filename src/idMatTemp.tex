@@ -1,0 +1,93 @@
+%! Author = Matthias
+%! Date = 15.10.2020
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{amsmath}
+\usepackage{german}
+
+% Document
+\begin{document}
+    \subsection{Matrix Invertierung}\label{subsec:matrxinv}
+    In diesem Kapitel folgt noch die genaue Beschreibung der Matrixinvertierung.
+    Man augmentiert hierzu erst die Matrix mit der Identit"atsmatrix:
+    \begin{equation}
+        \left[\begin{array}{ccc|ccc}
+                  \frac{\sqrt{2}}{2} & \frac{-\sqrt{2}}{2} & -L\sqrt{2} & 1 & 0 & 0 \\
+                  \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} & -L\sqrt{2} & 0 & 1 & 0\\
+                  \frac{\sqrt{2}}{2} & \frac{-\sqrt{2}}{2} & L\sqrt{2} & 0 & 0 & 1
+        \end{array}\right]\label{eq:startinv}
+    \end{equation}
+    Jetzt muss man in der ersten Spalte alle Werte auf 0 bekommen, au"ser dem an Zeile 1, Spalte 1 (Pivot).
+    Hierzu addiert man zuerst Reihe 1 zu Reihe 2:
+    \begin{equation}
+        \left[\begin{array}{ccc|ccc}
+                  \frac{\sqrt{2}}{2r}  & -\frac{sqrt{2}}{2r} & -\frac{\sqrt{2}L}{r} & 1 & 0 & 0 \\
+                  0                    & -\frac{sqrt{2}}{r}  & 0                    & 1 & 1 & 0 \\
+                  -\frac{\sqrt{2}}{2r} & \frac{sqrt{2}}{2r}  & -\frac{\sqrt{2}L}{r} & 0 & 0 & 1
+        \end{array}\right]\label{eq:equationr1addr3}
+    \end{equation}
+    Jetzt addiert man Reihe 1 zu Reihe 3:
+    \begin{equation}
+        \left[\begin{array}{ccc|ccc}
+                  \frac{\sqrt{2}}{2r} & -\frac{sqrt{2}}{2r} & -\frac{\sqrt{2}L}{r}  & 1 & 0 & 0 \\
+                  0                   & -\frac{sqrt{2}}{r}  & 0                     & 1 & 1 & 0 \\
+                  0                   & 0                   & -\frac{2\sqrt{2}L}{r} & 1 & 0 & 1
+        \end{array}\right]\label{eq:invr3tor1}
+    \end{equation}
+    Man multipliziert Reihe 1 mit $\sqrt{2}$:
+    \begin{equation}
+        \left[\begin{array}{ccc|ccc}
+                  1 & -1                 & -2L                   & \sqrt{2}r & 0 & 0 \\
+                  0 & -\frac{sqrt{2}}{r} & 0                     & 1         & 1 & 0 \\
+                  0 & 0                  & -\frac{2\sqrt{2}L}{r} & 1         & 0 & 1
+        \end{array}\right]\label{eq:invsqrtmult}
+    \end{equation}
+    Jetzt m"ussen in der zweiten Spalte alle Werte auf Null gesetzt werden, au"ser dem an Zeile 2, Spalte 2 (Pivot).
+    Hierzu multipliziert Reihe 2 mit $-\frac{\sqrt{2}r}{2}$:
+    \begin{equation}
+        \left[\begin{array}{ccc|ccc}
+                  1 & -1 & -2L                   & \sqrt{2}r            & 0                    & 0 \\
+                  0 & 1  & 0                     & -\frac{\sqrt{2}r}{2} & -\frac{\sqrt{2}r}{2} & 0 \\
+                  0 & 0  & -\frac{2\sqrt{2}L}{r} & 1                    & 0                    & 1
+        \end{array}\right]\label{eq:pivottwo}
+    \end{equation}
+    Dann Reihe 2 zu Reihe 1 addieren:
+    \begin{equation}
+        \left[\begin{array}{ccc|ccc}
+                  1 & 0 & -2L                   & \frac{\sqrt{2}r}{2}  & -\frac{\sqrt{2}r}{2} & 0 \\
+                  0 & 1 & 0                     & -\frac{\sqrt{2}r}{2} & -\frac{\sqrt{2}r}{2} & 0 \\
+                  0 & 0 & -\frac{2\sqrt{2}L}{r} & 1                    & 0                    & 1
+        \end{array}\right]\label{eq:r2tor1}
+    \end{equation}
+    Nun werden in der dritten Spalte alle Werte auf Null gesetzt, au"ser dem an Zeile 3, Spalte 3 (Pivot).
+    Dazu multipliziert Reihe 3 mit $-\frac{\sqrt{2}r}{4L}$:
+    \begin{equation}
+        \left[\begin{array}{ccc|ccc}
+                  1 & 0 & -2L & \frac{\sqrt{2}r}{2}   & -\frac{\sqrt{2}r}{2} & 0                     \\
+                  0 & 1 & 0   & -\frac{\sqrt{2}r}{2}  & -\frac{\sqrt{2}r}{2} & 0                     \\
+                  0 & 0 & 1   & -\frac{\sqrt{2}r}{4L} & 0                    & -\frac{\sqrt{2}r}{4L}
+        \end{array}\right]\label{eq:pivot3}
+    \end{equation}
+    Als N"achstes zieht man Reihe 3 mal $-2L$ von Reihe 1 ab:
+    \begin{equation}
+        \left[\begin{array}{ccc|ccc}
+                  1 & 0 & -0 & 0                     & -\frac{\sqrt{2}r}{2} & -\frac{\sqrt{2}r}{2}  \\
+                  0 & 1 & 0  & -\frac{\sqrt{2}r}{2}  & -\frac{\sqrt{2}r}{2} & 0                     \\
+                  0 & 0 & 1  & -\frac{\sqrt{2}r}{4L} & 0                    & -\frac{\sqrt{2}r}{4L}
+        \end{array}\right]\label{eq:mult3p1}
+    \end{equation}
+    Da nun die Identit"atsmatrix links steht, haben wir somit die Inverse gefunden:
+    \begin{equation}
+        \prescript{3}{}{J}^{-1} =
+        \begin{bmatrix}
+            0 & -\frac{r}{\sqrt{2}} & -\frac{r}{\sqrt{2}} \\
+            -\frac{r}{\sqrt{2}} & -\frac{r}{\sqrt{2}} & 0 \\
+            -\frac{r}{2\sqrt{2}L} & 0 & -\frac{r}{2\sqrt{2}L} \\
+        \end{bmatrix}\label{eq:finallydone}
+    \end{equation}
+
+
+\end{document}
