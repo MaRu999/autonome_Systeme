@@ -1,6 +1,6 @@
 pkg load io;
 
-% Is here so Octave does not think this is a script
+% Is here so Octave does not think this is a function
 1;
 
 % helper function so I don't have to type the axis limits every time
