@@ -24,31 +24,65 @@ hold on;
 res1 = Calc_new_pose(start, delta_s, delta_angle);
 covar1 = Calc_next_covar(delta_s, delta_angle, angle, d, k_r, k_l, covariance_start);
 
-plot(res1);
+plot(res1(1,:), res1(2,:), 'ro');
 elli1 = cov2ellipse(covar1);
-drawEllipse(elli1, 'linewidth', 2);
+elli1(1,1) = res1(1,1);
+elli1(1,2) = res1(2,1);
+drawEllipse(elli1);
 
 res2 = Calc_new_pose(res1, delta_s, delta_angle);
 covar2 = Calc_next_covar(delta_s, delta_angle, angle, d, k_r, k_l, covar1);
 
-plot(res2);
+plot(res2(1,:), res2(2,:), 'ro');
 elli2 = cov2ellipse(covar2);
-drawEllipse(elli2, 'linewidth', 2);
+elli2(1,1) = res2(1,1);
+elli2(1,2) = res2(2,1);
+drawEllipse(elli2);
 
 res3 = Calc_new_pose(res2, delta_s, delta_angle);
 covar3 = Calc_next_covar(delta_s, delta_angle, angle, d, k_r, k_l, covar2);
 
-plot(res3);
+plot(res3(1,:), res3(2,:), 'ro');
 elli3 = cov2ellipse(covar3);
-drawEllipse(elli3, 'linewidth', 2);
+elli3(1,1) = res3(1,1);
+elli3(1,2) = res3(2,1);
+drawEllipse(elli3);
 
 res4 = Calc_new_pose(res3, delta_s, delta_angle);
 covar4 = Calc_next_covar(delta_s, delta_angle, angle, d, k_r, k_l, covar3);
 
-plot(res4);
+plot(res4(1,:), res4(2,:), 'ro');
 elli4 = cov2ellipse(covar4);
-drawEllipse(elli4, 'linewidth', 2);
+elli4(1,1) = res4(1,1);
+elli4(1,2) = res4(2,1);
+drawEllipse(elli4);
 
-hold off;
+res5 = Calc_new_pose(res4, delta_s, delta_angle);
+covar5 = Calc_next_covar(delta_s, delta_angle, angle, d, k_r, k_l, covar4);
+
+plot(res5(1,:), res5(2,:), 'ro');
+elli1 = cov2ellipse(covar5);
+elli5(1,1) = res5(1,1);
+elli5(1,2) = res5(2,1);
+drawEllipse(elli5);
+
+res6 = Calc_new_pose(res5, delta_s, delta_angle);
+covar6 = Calc_next_covar(delta_s, delta_angle, angle, d, k_r, k_l, covar5);
+
+plot(res6(1,:), res6(2,:), 'ro');
+elli6 = cov2ellipse(covar6);
+elli6(1,1) = res6(1,1);
+elli6(1,2) = res6(2,1);
+drawEllipse(elli6);
+
+res7 = Calc_new_pose(res6, delta_s, delta_angle);
+covar7 = Calc_next_covar(delta_s, delta_angle, angle, d, k_r, k_l, covar6);
+
+plot(res7(1,:), res7(2,:), 'ro');
+elli7 = cov2ellipse(covar7);
+elli7(1,1) = res7(1,1);
+elli7(1,2) = res7(2,1);
+drawEllipse(elli7);
+
 
 % lambdas -> get out of 1/sqrt(det) * e blublub = 0
