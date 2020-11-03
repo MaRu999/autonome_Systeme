@@ -25,6 +25,9 @@ res1 = Calc_new_pose(start, delta_s, delta_angle);
 covar1 = Calc_next_covar(delta_s, delta_angle, angle, d, k_r, k_l, covariance_start);
 
 plot(res1(1,:), res1(2,:), 'ro');
+
+[v,w] = eig(inv(covar1));
+
 elli1 = cov2ellipse(covar1);
 elli1(1,1) = res1(1,1);
 elli1(1,2) = res1(2,1);
@@ -32,11 +35,14 @@ drawEllipse(elli1);
 
 res2 = Calc_new_pose(res1, delta_s, delta_angle);
 covar2 = Calc_next_covar(delta_s, delta_angle, angle, d, k_r, k_l, covar1);
+covar2inv = inv(covar2);
+[v,w] = eig(covar2inv);
 
 plot(res2(1,:), res2(2,:), 'ro');
 elli2 = cov2ellipse(covar2);
 elli2(1,1) = res2(1,1);
 elli2(1,2) = res2(2,1);
+elli2rot = elli2 * v;
 drawEllipse(elli2);
 
 res3 = Calc_new_pose(res2, delta_s, delta_angle);

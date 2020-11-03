@@ -1,6 +1,8 @@
 function jakobi = Jakobi_s(delta_s, delta_angle, angle, d)
+     val = angle + (delta_angle/2);
+     var = delta_s/(2*d);
     jakobi = [
-    0.5*cos(angle + delta_angle/2) - (delta_s/(2*d))*sin(angle + (delta_angle/2)) 0.5*cos(angle + delta_angle/2) + (delta_s/(2*d))*sin(angle + (delta_angle/2));
-    0.5*sin(angle + delta_angle/2) + (delta_s/(2*d))*cos(angle + (delta_angle/2)) 0.5*sin(angle + delta_angle/2) - (delta_s/(2*d))*cos(angle + (delta_angle/2));
-    1/d -1/d
+    (0.5*cos(val) - var*sin(val)), (0.5*cos(val) + var*sin(val));
+    (0.5*sin(val) + var*cos(val)), (0.5*sin(val) - var*cos(val));
+    (1/d), (-1/d)
     ];
