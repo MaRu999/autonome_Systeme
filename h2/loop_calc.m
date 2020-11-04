@@ -39,6 +39,6 @@ ylabel("y");
 % take five more steps with values set at the beginning of the script
 [start, covariance_start] = Draw_Loop(start, delta_s, delta_angle, d, k_r, k_l, covariance_start, 5);
 % print image to file
-%print -dpng -r300 task8.png;
+print -dpng -r300 task8v2.png;
 % stop holding figure
 hold off

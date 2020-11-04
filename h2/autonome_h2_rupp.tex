@@ -12,6 +12,13 @@
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Matthias Rupp}
+\lhead{Autonome Systeme - Bewegung}
+
 % Document
 \begin{document}
 
@@ -43,12 +50,13 @@
 
 
     \section{Haus"ubung 2}\label{sec:h2}
+    \subsection{Angaben}\label{subsec:angaben}
     Unsicherheitsfaktoren: $k_{r} = k_{l} = 0.001$\newline
     Radabstand: d = 20cm\newline
     Meine Angaben (Aufgabe 8):\newline
     Startposition: x = 0, y = 0, $\theta = 60\degree$\newline
-    Pfad: 5 Schritte mit jeweils 15 cm vorw"arts, ein Schritt mit Drehung um $\pi/2$, dann 5 Schritte mit jeweils 15 cm vorw"arts.\newline
-    Code:\newline
+    Pfad: 5 Schritte mit jeweils 15 cm vorw"arts, ein Schritt mit Drehung um $\pi/2$, dann 5 Schritte mit jeweils 15 cm vorw"arts.
+    \subsection{Code}\label{subsec:code}
     Funktion f"ur die Berechnung von $G_{s}$:
     \lstinputlisting[language=Octave]{Jakobi_s.m}
     Funktion f"ur die Berechnung von $G_{p}$
@@ -84,7 +92,6 @@
     Diese Formeln benutzen wir im Code, der folgt:
     Funktion f"ur die Berechnung der $\Delta s$ der R"ader.
     \lstinputlisting[language=Octave]{Get_wheel_deltas.m}
-
     Funktion f"ur die Berechnung der Kovarianzmatrix der R"ader:
     \lstinputlisting[language=Octave]{Covariance_drive.m}
     Funktion f"ur die Berechnung der n"achsten Kovarianzmatrix:
@@ -97,7 +104,8 @@
     \lstinputlisting[language=Octave]{Draw_Loop.m}
     Skript, das die Aufgabe 8 mit hilfe der anderen Funktionen berechnet:
     \lstinputlisting[language=Octave]{loop_calc.m}
-    Hier noch das anhand dieses Codes ermittelte Bild:
+    \subsection{Resultat}\label{subsec:res}
+    Hier noch das anhand dieses Codes geplottete Bild:
     \begin{figure}[H]
         \centering
         \includegraphics[width=15cm]{task8.png}
