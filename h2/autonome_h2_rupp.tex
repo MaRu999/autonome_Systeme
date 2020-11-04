@@ -41,36 +41,67 @@
     }
     \lstset{style=mystyle}
 
-\section{Haus"ubung 2}\label{sec:h2}
+
+    \section{Haus"ubung 2}\label{sec:h2}
     Unsicherheitsfaktoren: $k_{r} = k_{l} = 0.001$\newline
     Radabstand: d = 20cm\newline
     Meine Angaben (Aufgabe 8):\newline
     Startposition: x = 0, y = 0, $\theta = 60\degree$\newline
     Pfad: 5 Schritte mit jeweils 15 cm vorw"arts, ein Schritt mit Drehung um $\pi/2$, dann 5 Schritte mit jeweils 15 cm vorw"arts.\newline
     Code:\newline
-Funktion f"ur die Berechnung von $G_{s}$:
-\lstinputlisting[language=Octave]{Jakobi_s.m}
-Funktion f"ur die Berechnung von $G_{p}$
-\lstinputlisting[language=Octave]{Jakobi_p.m}
-Funktion f"ur die Berechnung der $\Delta s$ der R"ader:
-\lstinputlisting[language=Octave]{Get_wheel_deltas.m}
-Funktion f"ur die Berechnung der Kovarianzmatrix der R"ader:
-\lstinputlisting[language=Octave]{Covariance_drive.m}
-Funktion f"ur die Berechnung der n"achsten Kovarianzmatrix:
-\lstinputlisting[language=Octave]{Covar_next.m}
-Helferfunktion, die anhand der Eingabewerte alle n"otigen Vorberechnungen (Jakobimatrizen, etc.) mit den entsprechenden Funktionen ausf"uhrt und dann die n"achste Kovarianzmatrix mit Covar\_next berechnet:
-\lstinputlisting[language=Octave]{Calc_next_covar.m}
-Funktion, die die n"achste Pose des Roboters berechnet:
-\lstinputlisting[language=Octave]{Calc_new_pose.m}
-Funktion, die bei gleichbleibenden Eingabewerten eine beliebige Anzahl Schritte hintereinander berechnet und plottet:
-\lstinputlisting[language=Octave]{Draw_Loop.m}
-Skript, das die Aufgabe 8 mit hilfe der anderen Funktionen berechnet:
-\lstinputlisting[language=Octave]{loop_calc.m}
+    Funktion f"ur die Berechnung von $G_{s}$:
+    \lstinputlisting[language=Octave]{Jakobi_s.m}
+    Funktion f"ur die Berechnung von $G_{p}$
+    \lstinputlisting[language=Octave]{Jakobi_p.m}
+    Die mathematische Formel f"ur die Berechnung von $\Delta s_{r}$ und $\Delta s_{l}$ steht nicht explizit im Skriptum, sie wurde selbst hergeleitet:
+    Von den Folien stammen die Vorbedingungen:
+    \begin{equation}
+        \begin{aligned}
+            \Delta s = \frac{\Delta s_{r} + \Delta s_{l}}{2} \\
+            \Delta \theta = \frac{\Delta s_{r} - \Delta s_{l}}{d}
+        \end{aligned}
+    \end{equation}
+    Wir multiplizieren jetzt die erste Zeile mit 2 und die zweite Zeile mit d:
+    \begin{equation}
+        \begin{aligned}
+            2\Delta s = \Delta s_{r} + \Delta s_{l} \\
+            \Delta \theta d = \Delta s_{r} - \Delta s_{l}
+        \end{aligned}
+    \end{equation}
+    Nun addieren wir die erste Zeil zur zweiten Zeile:
+    \begin{equation}
+        \Delta \theta d + 2\Delta s = 2\Delta s_{r}
+    \end{equation}
+    Wir dividieren durch zwei:
+    \begin{equation}
+        \frac{\Delta \theta d + 2\Delta s}{2} = \Delta s_{r}
+    \end{equation}
+    Nun haben wir eine Formel f"ur $\Delta s_{r}$.
+    Wir formen nun $2\Delta s = \Delta s_{r} + \Delta s_{l}$ nach $\Delta s_{l}$ um:
+    \begin{equation}
+        \Delta s_{l} = 2\Delta s - \Delta s_{r}
+    \end{equation}
+    Diese Formeln benutzen wir im Code, der folgt:
+    Funktion f"ur die Berechnung der $\Delta s$ der R"ader.
+    \lstinputlisting[language=Octave]{Get_wheel_deltas.m}
+
+    Funktion f"ur die Berechnung der Kovarianzmatrix der R"ader:
+    \lstinputlisting[language=Octave]{Covariance_drive.m}
+    Funktion f"ur die Berechnung der n"achsten Kovarianzmatrix:
+    \lstinputlisting[language=Octave]{Covar_next.m}
+    Helferfunktion, die anhand der Eingabewerte alle n"otigen Vorberechnungen (Jakobimatrizen, etc.) mit den entsprechenden Funktionen ausf"uhrt und dann die n"achste Kovarianzmatrix mit Covar\_next berechnet:
+    \lstinputlisting[language=Octave]{Calc_next_covar.m}
+    Funktion, die die n"achste Pose des Roboters berechnet:
+    \lstinputlisting[language=Octave]{Calc_new_pose.m}
+    Funktion, die bei gleichbleibenden Eingabewerten eine beliebige Anzahl Schritte hintereinander berechnet und plottet:
+    \lstinputlisting[language=Octave]{Draw_Loop.m}
+    Skript, das die Aufgabe 8 mit hilfe der anderen Funktionen berechnet:
+    \lstinputlisting[language=Octave]{loop_calc.m}
     Hier noch das anhand dieses Codes ermittelte Bild:
     \begin{figure}[H]
         \centering
-        \includegraphics[width=6cm]{task8.png}
-        \caption{Mimicry flowchart}
+        \includegraphics[width=15cm]{task8.png}
+        \caption{Mit Code erstellter Plot zu Aufgabe 8}
         \label{fig:result}
     \end{figure}
 
