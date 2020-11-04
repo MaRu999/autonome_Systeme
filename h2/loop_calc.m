@@ -28,11 +28,17 @@ figure();
 hold on
 % plot the starting point (no uncertainty, so no ellipse needed)
 plot(start(1,1), start(2,1), 'r+');
+% set label for x axis
+xlabel("x");
+% set label for y axis
+ylabel("y");
 % take the first five steps with the values set above
 [start, covariance_start] = Draw_Loop(start, delta_s, delta_angle, d, k_r, k_l, covariance_start, 5);
 % take one step that travels no distance, but rotates the robot by pi/2
 [start, covariance_start] = Draw_Loop(start, 0, pi/2, d, k_r, k_l, covariance_start, 1);
 % take five more steps with values set at the beginning of the script
 [start, covariance_start] = Draw_Loop(start, delta_s, delta_angle, d, k_r, k_l, covariance_start, 5);
+% print image to file
+%print -dpng -r300 task8.png;
 % stop holding figure
 hold off
