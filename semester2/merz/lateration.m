@@ -1,4 +1,4 @@
-function [robot_p, a, b] = lateration(l_one, l_two, l_three, r_one, r_two, r_three)
+function robot_p = lateration(l_one, l_two, l_three, r_one, r_two, r_three)
     x_one = l_one(1);
     y_one = l_one(2);
     x_two = l_two(1);
