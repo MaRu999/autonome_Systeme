@@ -1,0 +1,12 @@
+function [robot_p, a, b] = lateration(l_one, l_two, l_three, r_one, r_two, r_three)
+    x_one = l_one(1);
+    y_one = l_one(2);
+    x_two = l_two(1);
+    y_two = l_two(2);
+    x_three = l_three(1);
+    y_three = l_three(2);
+    a = r_one^2 - r_two^2 + x_two^2 - x_one^2 + y_two^2 - y_one^2
+    b = r_one^2 - r_three^2 + x_three^2 - x_one^2 + y_three^2 - y_one^2
+    x = 0.5 * ((a * (y_three - y_one) - b * (y_two - y_one))/((x_two - x_one) * (y_three - y_one) - (x_three - x_one) * (y_two - y_one)));
+    y = 0.5 * (((x_two - x_one) * b - (x_three - x_one) * a)/((x_two - x_one) * (y_three - y_one) - (x_three - x_one) * (y_two - y_one)));
+    robot_p = [x;y];
