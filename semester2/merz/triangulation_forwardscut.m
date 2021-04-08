@@ -1,0 +1,16 @@
+function robot_pose = triangulation_forwardscut(a, b, rpa, rpb)
+    xa = a(1);
+    ya = a(2);
+    xb = b(1);
+    yb = b(2);
+    rap = mod(rpa + pi,2*pi);
+    rbp = mod(rpb + pi,2*pi);
+    ab = sqrt((yb - ya)^2 + (xb - xa)^2);
+    rab = atan2((yb - ya), (xb - xa));
+    rba = mod(rab + pi,2*pi);
+    alpha_angle = abs(rap - rab);
+    beta_angle = abs(rba - rbp);
+    ap = ab * (sin(beta_angle)/sin(alpha_angle + beta_angle));
+    x = xa + ap * cos(rap);
+    y = ya + ap * sin(rap);
+    robot_pose = [x;y];
