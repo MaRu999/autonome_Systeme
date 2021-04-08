@@ -1,4 +1,8 @@
 function robot_pose = triangulation_backwardscut(a, m, b, alpha_p, beta_p)
+    if alpha_p + beta_p > pi
+        alpha_p = alpha_p - pi;
+        beta_p = beta_p - pi;
+    end
     xa = a(1);
     ya = a(2);
     xm = m(1);
