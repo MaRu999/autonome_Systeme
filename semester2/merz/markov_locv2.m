@@ -1,4 +1,5 @@
 function pos = markov_locv2(cell_num, map, move_model, measurement_model, measurements, step_num, min_p)
+    figures = {'prior1', 'prior2', 'prior3', 'prior4', 'prior5', 'posterior1', 'posterior2', 'posterior3', 'posterior4', 'posterior5'};
     pos = ones(1,cell_num) * (1/cell_num);
     % steps
     for i=1:step_num
@@ -14,6 +15,7 @@ function pos = markov_locv2(cell_num, map, move_model, measurement_model, measur
         bar(pos);
         xlabel("Cell")
         ylabel("probability");
+        print("-dpng","-color",figures{i});
         % do posterior
         posterior = zeros(1, cell_num);
         for n=1:cell_num
@@ -27,4 +29,5 @@ function pos = markov_locv2(cell_num, map, move_model, measurement_model, measur
         bar(pos);
         xlabel("Cell")
         ylabel("probability");
+        print("-dpng","-color",figures{i+5});
     end
