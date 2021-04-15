@@ -9,5 +9,4 @@ measurement_model(2,:) = 1 - measurement_model(1,:);
 measurements = [1, 2, 1, 2, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1];
 step_num = 10;
 test = markov_loc(cell_num, map, move_model, measurement_model, measurements, step_num)
-disp(test);
-disp(sum(sum(test)));
+bar(test);
