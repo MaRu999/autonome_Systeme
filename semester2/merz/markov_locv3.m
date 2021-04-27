@@ -7,7 +7,8 @@ function pos = markov_locv3(cell_num, map, move_model, measurement_model, measur
         temp_pos = zeros(1, cell_num);
         for k=1:cell_num
             for m=1:max(size(move_model))
-                temp_pos(k) = temp_pos(k) + pos(ring_buff(k-move_model(1,m),cell_num)) * move_model(2,m);
+                pos_i = ring_buff(k+move_model(1,m), cell_num);
+                temp_pos(pos_i) = temp_pos(pos_i) + pos(k) * move_model(2,m);
             end
         end
         pos = temp_pos;
@@ -23,7 +24,7 @@ function pos = markov_locv3(cell_num, map, move_model, measurement_model, measur
         for n=1:cell_num
             posterior(n) = measurement_model(n,measurements(i)) * pos(n);
         end
-        posterior(posterior==0) = min_p;
+        posterior(posterior < min_p) = min_p;
         nu = 1/sum(posterior);
         posterior = posterior * nu;
         pos = posterior;
