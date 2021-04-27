@@ -104,63 +104,51 @@
     \begin{enumerate}
         \item Create a $N x N$ matrix, where $N$ is the number of cells ($50$ in this exercise).
         Note that the matrix could be chosen smaller in this exercise, but a $N x N$ matrix could capture measurements from each cell to every other cell, so it will be used.
-        \item Iterate over all cells with pillars on them (e.g. a vector called "map" containing $5, 14, 21, 32, 46$ as values)
-        \item For the first value of map, start with cell $1$
-        \item Calculate the distance from cell $1$ to the cell with the pillar (pillar cell - cell, so $5 - 1 = 4$, for example)
-        \item At the row of the cell and the column of the calculated distance (e.g. $1,4$), insert the probability to measure the actual distance, $0.5$
-        \item At distance $- 1$ and distance $+ 1$, add the probability of a measurement error $0.25$
-        \item Increment cell number (e.g. from $1$ to $2$) and repeat until the cell number is one lower than the pillar cell, e.g. when the pillar is on cell $5$, until cell $4$
-        \item Take the next value from the "map", use the last map value as starting value (e.g. take $14$ from map, start loop with $5$)
-        \item Repeat distance calculation and adding probability at specific matrix indices
-        \item Repeat until all values from the "map", meaning all cells with pillars on them, have been processed
-        \item Note that, since the cells behind the last pillar ($46$, in this case), loop back around to the first pillar when measuring distance, they need to be adjusted
-        \item To do that, calculate the distance from the cell with the last pillar to the cell with the first pillar ($46$ to $5 = 9$, in this case)
-        \item Starting with $46$, set the probabilities using the cell number as the row and the distance as the column ($46$ and $9$, for this example) as before (including measurement errors)
-        \item Decrease distance by one and increment cell number by one (so, cell $47$, distance $8$) and repeat probability assignment in matrix
-        \item Repeat until the remaining cells are covered
+        \item Let the index of the matrix row be $r$ and the index of the matrix column be $c$
+        \item For each matrix cell $r,c$, enter the probability that the robot measured the distance $c$ from the cell $r$ with $0.5$
+        \item For the cells $r,c-1$ and $r,c+1$, enter the probability $0.25$, which is the probability of the measurement error (meaning the robot measured on cell less/more than the cell the actual obstacle is in)
     \end{enumerate}
-    The result of this process is a $N x N$ matrix from which, using the cell index and the measured distance, the probability that this distance was measured from said cell can be extracted.
-    This matrix, together with a vector containing the measured distances for each step $5,10,7,2,10$, will be used in the posterior calculation.
+    The result of this process is a $N x N$ matrix from which, using the cell index as $r$ and the measured distance as $c$, the probability that this distance was measured from said cell can be extracted from cell $r,c$ of the matrix.
+    This matrix, together with a vector containing the measured distances for each step, $5,10,7,2,10$, will be used in the posterior calculation.
 
     \section{Documentation of procedure}\label{sec:proc}
 
     For this exercise, we start with a uniform distribution for the robot's placement.
     Since we have $50$ cells, this means a probability of $\frac{1}{50}$ for every cell.
-    Internally, this is represented as a vector with fifty entries of $\frac{1}{50}$, one for each cell.
-    This vector will be called "pos" from here on.
     The robot now takes the first step.
     This means the calculation of the new position based on the movement model.\newline
-    To achieve this, we iterate over the whole movement model for every cell (so, a loop inside a loop).
-    Let $k$ be the cell index and $m$ be the index of the movement model.
-    We calculate the probability that the robot has moved to position $k$ by iterating over the entire movement model.
-    For each $m$, we get the distance from $m$ and subtract it from our position $k$.
-    This will lead to a new position $k-m$, for which we get the probability from "pos" and multiply this with the possibility that the robot moved said distance, also gotten from the movement model.
-    The result of this calculation is added up for all $m$ positions of the movement model and saved.\newline
-    Once we have iterated over the entire movement model, we increment $k$ by one and repeat the entire processed described above.
-    This is done until all $50$ cells have been covered.
-    The result will be a new "pos" vector, with the new priors for all cells.
-    This entire process is the implementation of \autoref{eq:preq}, as seen in page 19 of \textcite{merz_autonome_2}.
+    \autoref{eq:preq} shows the formula for this process, taken from page 19 of \textcite{merz_autonome_2}.
     \begin{equation}\label{eq:preq}
-        \overline{\operatorname{bel}}\left(x_{t}\right)=\sum_{x_{t-1}} p\left(x_{t} \mid u_{t}, x_{t-1}\right) \operatorname{bel}\left(x_{t-1}\right)
+    \overline{\operatorname{bel}}\left(x_{t}\right)=\sum_{x_{t-1}} p\left(x_{t} \mid u_{t}, x_{t-1}\right) \operatorname{bel}\left(x_{t-1}\right)
     \end{equation}
-    %TODO: this
-    TODO: explain what equation does and what you did.\newline
-    After the robot has moved, the sensor measurement is next.
-    For this, a vector to save the posterior values is created, with $50$ possible entries.
-    We then loop from $1$ to $50$, so we loop over all cells.
-    Let $n$ be the index of the cell and $i$ be the number of the current step.
-    We get the measured distance for the step from the measurements vector at index $i$.
-        Then, we get the entry from the measurement model matrix at row $n$ and column measurements$(i)$ and multiply this with the prior for this cell.
-        This value is then saved in the vector for the posterior values at index $n$.\newline
-        After repeating this for all cells, all entries of the posterior vector that are $0$ get assigned a small value, $10^-5$ in this example.
-        Following this, the parameter $\eta$ is calculated by dividing $1$ by the sum of all posteriors.
-        The posteriors are then multiplied with $\eta$.
-        With this, one step is finished.
-        The calculated posteriors are used as the new "pos" vector for the next step and the whole process is repeated for the wanted number of steps.
-This part of the procedure implements \autoref{eq:posteq}, as seen on page 19 of \textcite{merz_autonome_2}.
+    We want to calculate the probability (or belief), that we are at the position $x_{t}$ after moving.
+    To this end, we take the probability that we have moved to position $x_{t}$ given the movement information $u_{t},x_{t-1}$ and multiply this with the probability that the robot was located at $x_{t-1}$ in the first place.
+    We then sum up these calculations for each cell and all movement information to get the probabilities that the robot moved to each cell.\newline
+    In this concrete example, where the robot moves $3, 4, 5, 6, 7$ steps with the probabilities $0.1, 0.2, 0.4, 0.2, 0.1$, we go through each cell, calculate into which cells it can move from the cell we are currently looking at, multiply the movement possibilities with the possibility that the robot is located in the current cell in the first place, and remember said possibilities for the cells the robot may have moved to.
+    To give a concrete example: the robot is in cell $5$ with a probability of $0.2$.
+    It moves $3$ cells with a probability of $0.1$, so the probability that the robot moved to cell $5 + 3 = 8$ from cell $5$ is $0.1 * 0.2 = 0.02$.
+    For moving $4$ cells, the calculation is $0.2 * 0.2 = 0.04$ for moving to cell $5 + 4 = 9$ and so on.
+    By doing this for every cell and summing up the resulting probabilities (so we sum up all the probabilities that the robot could have moved to a certain cell from any other cell, and we do this for each cell), we get a new distribution of probabilities that shows where the robot might be after having moved.
+    These are our priors.
+    The next step is for the robot to measure distances.\newline
+    How to calculate the robot's position after sensor measurements, also called the posteriors, can be seen in \autoref{eq:posteq}, also from page 19 of \textcite{merz_autonome_2}.
     \begin{equation}\label{eq:posteq}
-        \operatorname{bel}\left(x_{t}\right)=\eta p\left(z_{t} \mid x_{t}, M\right) \overline{b e l}\left(x_{t}\right)
+    \operatorname{bel}\left(x_{t}\right)=\eta p\left(z_{t} \mid x_{t}, M\right) \overline{b e l}\left(x_{t}\right)
     \end{equation}
+    What we want to know is the probability that the robot is on certain cell given the measured distance.
+    However, we do not know this.
+    Instead, we calculate our posteriors by calculating the probability that the robot measured a certain distance $z_{t}$ given his current position $x_{t}$ and the map with our obstacles $M$, which we multiply with the probability that the robot is located at said current position in the first place (which is the prior we calculated in the step before, $\overline{b e l}\left(x_{t}\right)$).
+    A concrete example would be: we are at cell $12$ with a probability (the prior) of $0.35$.
+    The measured distances, as specified in the task sheet, are $5, 10 , 7 , 2, 10$.
+    Assuming we are currently measuring after step $4$, this means we measure a distance of $2$.
+    Since the next (and only) pillar the robot can see from cell $12$ is the pillar at cell $14$, the probability that we measured the distance $2$ given the position $12$ and the map with the obstacles is $0.5$, due to our sensor having uncertainties.
+    So, the calculation is $0.5 * 0.35 = 0.175$ for cell $12$.\newline
+    The principle is the same for all other cells.
+    Then, we need to multiply this result with a factor $\eta$, to ensure a sum of $1$ over all posteriors.
+    Before calculating this $\eta$, it is a good idea to replace all posteriors which are smaller than a certain value $min_{p}$ with said value $min_{p}$, to get rid of any zeros or very small values.
+    $\eta$ can then be calculated with the simple formula $\eta = \frac{1}{sum(posteriors)}$.
+    Now, we multiply our posteriors with $\eta$, and have finished the calculation of the posteriors for this step.\newline
+    In the next step the robot makes, these posteriors will be used to calculate the priors, and the process repeats.
 
         \section{Results for $5$ steps}\label{sec:results}
         In this section, the prior and posterior plots for $5$ steps will be shown.
