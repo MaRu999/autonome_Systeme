@@ -19,10 +19,10 @@ robot_pos = p_start;
 
 while 1
     cur_pos = robot_pos;
-    robot_pos = force_attract(k_att, cur_pos, p_goal) + force_repel(k_rep, cur_pos, mids, radii, roh_min)
+    robot_pos = robot_pos + (force_attract(k_att, cur_pos, p_goal) +  force_repel(k_rep, cur_pos, mids, radii, roh_min))
     ps_vec = [ps_vec, robot_pos];
     g = g + 1;
-    if abs(robot_pos - goal_p) <= [10^-10;10^-10];
+    if abs(robot_pos - p_goal) <= [10^-10;10^-10];
         break;
     end
 end
