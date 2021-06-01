@@ -9,6 +9,6 @@ function f_r = force_repel(k_rep, robot_pos, obstacles, radii, roh_min)
         if dist >= roh_min
             f_r = f_r + 0;
         else
-            f_r = f_r + (k_rep * ((1/dist) - (1/roh_min)) * ((robot_pos - obs_p)/(dist^3)));
+            f_r = f_r + (k_rep * ((1/dist) - (1/roh_min)) * ((robot_pos - mid_pos)/(dist^3)));
         end
     end

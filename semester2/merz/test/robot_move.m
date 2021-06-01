@@ -30,3 +30,9 @@ figure();
 plot(ps_vec(1,:), ps_vec(2,:));
 xlabel("x");
 ylabel("y");
+hold on;
+circle(h1(1),h1(2), r1);
+circle(h2(1), h2(2), r2);
+circle(h3(1), h3(2), r3);
+
+hold off;
