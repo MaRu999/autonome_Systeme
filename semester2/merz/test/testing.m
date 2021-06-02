@@ -28,6 +28,8 @@ xlabel("x");
 ylabel("y");
 zlabel("z");
 axis("ij");
+% print image to file
+print -dpng -r300 u_att.png;
 
 for i=1:200
     for j=1:200
@@ -42,6 +44,8 @@ xlabel("x");
 ylabel("y");
 zlabel("z");
 axis("ij");
+% print image to file
+print -dpng -r300 u_rep.png;
 
 u_combi = u_atts + min(0.2, u_reps);
 figure();
@@ -50,3 +54,5 @@ xlabel("x");
 ylabel("y");
 zlabel("z");
 axis("ij");
+% print image to file
+print -dpng -r300 u_combi.png;
