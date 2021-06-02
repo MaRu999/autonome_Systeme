@@ -106,7 +106,7 @@
         \end{array}\right.
     \end{equation}
     $k_{\text {rep }}$ is a scaling factor, $\rho(q)$ is the minimal distance of the robot to the obstacle at position $q$.
-    $\rho_{0}$ is distance to which the obstacle influences the robot.
+    $\rho_{0}$ is the distance in which the obstacle influences the robot.
     This way, the condition for the repelling potential having no influence when the robot is far away from the obstacle, but being strong when close to an obstacle is fulfilled.
     Plotting the repelling field with the parameters from the task sheet and the given formula results in \autoref{fig:repfield}.
     \begin{figure}[H]
@@ -154,7 +154,7 @@
         \end{array}\right.
     \end{equation}
     To calculate the robot path based on these formulas, the robot is placed at a starting postion.
-    Note that the goal position also need to be known from the beginning.
+    Note that the goal position also needs to be known from the beginning.
     From this starting position, the attracting and repelling forces are calculated.
     Said forces are vectors, in our concrete examples, so the new position is calculated by adding the attracting and repelling force vectors to the robot position.
     Based on this new robot position, this process is repeated, until the goal is reached.
