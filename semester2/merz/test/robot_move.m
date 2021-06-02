@@ -26,9 +26,13 @@ while 1
 end
 figure();
 plot(ps_vec(1,:), ps_vec(2,:));
+ylim([0 10]);
+xlim([0 10]);
 xlabel("x");
 ylabel("y");
 hold on;
+plot(2, 1, 'r+');
+plot(9, 9, 'g+');
 circle(h1(1),h1(2), r1);
 circle(h2(1), h2(2), r2);
 circle(h3(1), h3(2), r3);
