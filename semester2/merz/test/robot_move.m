@@ -33,9 +33,9 @@ ylabel("y");
 hold on;
 plot(2, 1, 'r+');
 plot(9, 9, 'g+');
-circle(h1(1),h1(2), r1);
-circle(h2(1), h2(2), r2);
-circle(h3(1), h3(2), r3);
+circle2(h1(1),h1(2), r1);
+circle2(h2(1), h2(2), r2);
+circle2(h3(1), h3(2), r3);
 hold off;
 % print image to file
 print -dpng -r300 robot_path.png;
